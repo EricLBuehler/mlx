@@ -514,12 +514,6 @@ def main():
         help="The port to use for the NCCL communication (only for nccl backend)",
     )
     parser.add_argument(
-        "--no-verify-script",
-        action="store_false",
-        dest="verify_script",
-        help="Do not verify that the script exists",
-    )
-    parser.add_argument(
         "--python", default=sys.executable, help="Use this python on the remote hosts"
     )
 
@@ -552,8 +546,6 @@ def main():
         rest[0:1] = [args.python, str(script.resolve())]
     elif (command := shutil.which(rest[0])) is not None:
         rest[0] = command
-    elif args.verify_script:
-        raise ValueError(f"Invalid script or command {rest[0]}")
 
     # Launch
     if args.backend == "ring":
